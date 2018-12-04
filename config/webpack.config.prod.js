@@ -224,6 +224,10 @@ module.exports = {
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
       'react-native': 'react-native-web',
+      '$src': paths.appSrc,
+      '$client': path.join(paths.appSrc, 'client'),
+      '$common': path.join(paths.appSrc, 'common'),
+      '$modules': path.join(paths.appSrc, 'modules'),
     },
     plugins: [
       // Adds support for installing with Plug'n'Play, leading to faster installs and adding
@@ -260,7 +264,10 @@ module.exports = {
             options: {
               formatter: require.resolve('react-dev-utils/eslintFormatter'),
               eslintPath: require.resolve('eslint'),
-              
+              rules: {
+
+              },
+              globals: ["Ajax"],
             },
             loader: require.resolve('eslint-loader'),
           },

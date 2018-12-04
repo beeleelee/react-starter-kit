@@ -43,8 +43,8 @@ ajaxinstance
     let {
       data
     } = response
-    if (data.status == 'error') {
-      if (data.result.error_code == 6001) { // 登录过期
+    if (data.status === 'error') {
+      if (data.result.error_code === 6001) { // 登录过期
         Cookies.remove('access_key')
         window.location.reload()
       }
