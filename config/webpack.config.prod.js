@@ -1,4 +1,4 @@
-'use strict';
+
 
 const fs = require('fs');
 const path = require('path');
@@ -441,6 +441,9 @@ module.exports = {
         minifyCSS: true,
         minifyURLs: true,
       },
+    }),
+    new webpack.ProvidePlugin({
+      Ajax: path.join(__dirname, '../src/common/request/index.js')
     }),
     // Inlines the webpack runtime script. This script is too small to warrant
     // a network request.

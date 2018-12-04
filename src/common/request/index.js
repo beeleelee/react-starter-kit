@@ -1,9 +1,9 @@
-import axios from 'axios'
-import Cookies from 'js-cookie'
-import Config from '../config'
+const axios = require('axios')
+const Cookies = require('js-cookie')
+const Config = require('../config')
 
 // 实例化 ajax请求对象
-export const ajaxinstance = axios.create({
+const ajaxinstance = axios.create({
   baseURL: Config.apiBaseURL,
   timeout: 10000,
   headers: {
@@ -55,4 +55,4 @@ ajaxinstance
     return Promise.reject(error)
   })
 
-export default ajaxinstance
+module.exports = ajaxinstance 
