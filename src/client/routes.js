@@ -13,7 +13,6 @@ const routes = [
   }
 ]
 for (let i = 0; i < keys.length; i++) {
-  console.log(keys[i])
   let route = context(keys[i])
 
   routes.push(route.default ? route.default : route)

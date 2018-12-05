@@ -10,17 +10,16 @@ import rootReducer from './rootReducer'
 import Routes from './routes'
 import history from './history'
 import { Router } from 'react-router-dom'
-import Container from './container'
+import SubLayout from './SubLayout'
 
 let redux_tool_obj = typeof (window.__REDUX_DEVTOOLS_EXTENSION__) === 'undefined' ? applyMiddleware(thunk) : compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__())
-console.log(Routes)
 const store = createStore(rootReducer, redux_tool_obj)
 class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <Router history={history}>
-          <Container routes={Routes} />
+          <SubLayout routes={Routes} />
         </Router>
       </Provider>
     );
