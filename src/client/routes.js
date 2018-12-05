@@ -9,11 +9,14 @@ const routes = [
     title: '',
     path: '/',
     exact: true,
-    component: Home 
+    component: Home
   }
 ]
 for (let i = 0; i < keys.length; i++) {
-  routes.push(context(keys[i]))
+  console.log(keys[i])
+  let route = context(keys[i])
+
+  routes.push(route.default ? route.default : route)
 }
 
 export default routes 
