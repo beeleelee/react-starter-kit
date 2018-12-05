@@ -1,30 +1,52 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { isSet } from 'mytoolkit'
 
 const nodePath = require('path')
 
+const parse = (routes = [], dir = '') => {
+  let parsedRoutes = []
+
+  routes.forEach(route => {
+    const path = nodePath.join(dir, route.path)
+    if (isSet(route.component)) {
+      parsedRoutes.push({
+        path,
+        title: route.title,
+        component: route.component,
+        exact: route.exact
+      })
+    }
+    if (route.routes && route.routes.length > 0) {
+      parsedRoutes = [
+        ...parsedRoutes,
+        ...parse(route.routes, path)
+      ]
+    }
+  })
+
+  return parsedRoutes
+}
+
 const SubLayout = ({ routes = [], dir = '' }) => {
+  let parsedRoutes = parse(routes)
+
   return (
-    <React.Fragment>
+    <Switch>
       {
-        routes.map((route, i) => {
-          const path = nodePath.join(dir, route.path)
-          const subRoutes = route.routes || []
-          if (subRoutes.length > 0) {
-            return <SubLayout key={i} routes={subRoutes} dir={path} />
-          }
-          if (route.component) {
-            return <Route
+        parsedRoutes.map((route, i) => {
+          return (
+            <Route
               key={i}
-              path={path}
-              exact={isSet(route.exact) && !route.exact ? false : true}
-              component={route.component} />
-          }
-          return null
+              path={route.path}
+              exact={!isSet(route.exact) && !route.exact ? false : true}
+              component={route.component}
+            />
+          )
         })
       }
-    </React.Fragment>
+      <Route path="*" render={() => <div>404</div>} />
+    </Switch>
   )
 }
 
