@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux'
-import { 
+import {
   createStore,
   applyMiddleware,
   compose,
@@ -12,7 +12,7 @@ import history from './history'
 import { Router } from 'react-router-dom'
 import Container from './container'
 
-let redux_tool_obj = typeof (window.__REDUX_DEVTOOLS_EXTENSION__) === 'undefined' ? applyMiddleware(thunk) : compose(applyMiddleware(thunk))
+let redux_tool_obj = typeof (window.__REDUX_DEVTOOLS_EXTENSION__) === 'undefined' ? applyMiddleware(thunk) : compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__())
 console.log(Routes)
 const store = createStore(rootReducer, redux_tool_obj)
 class App extends Component {
