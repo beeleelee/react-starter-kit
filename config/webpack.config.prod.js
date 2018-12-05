@@ -378,6 +378,10 @@ module.exports = {
               getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
+          {
+            test: /\.less$/,
+            use: getStyleLoaders({ importLoaders: 2 }, 'less-loader'),
+          },
           // Opt-in support for SASS. The logic here is somewhat similar
           // as in the CSS routine, except that "sass-loader" runs first
           // to compile SASS files into CSS.
