@@ -9,7 +9,7 @@ import thunk from 'redux-thunk'
 import rootReducer from './rootReducer'
 import Routes from './routes'
 import history from './history'
-import { Router, Redirect, Switch } from 'react-router-dom'
+import { Router, Switch } from 'react-router-dom'
 import SubLayout from './SubLayout'
 
 let redux_tool_obj = typeof (window.__REDUX_DEVTOOLS_EXTENSION__) === 'undefined' ? applyMiddleware(thunk) : compose(applyMiddleware(thunk), window.__REDUX_DEVTOOLS_EXTENSION__())
@@ -21,7 +21,6 @@ class App extends Component {
         <Router history={history}>
           <Switch>
             <SubLayout routes={Routes} />
-            <Redirect from="*" to="/user" />
           </Switch>
         </Router>
       </Provider>

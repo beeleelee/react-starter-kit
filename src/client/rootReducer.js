@@ -8,13 +8,10 @@ const reducers = {}
 
 for (let i = 0; i < keys.length; i++) {
   let exp = context(keys[i])
-  console.log(exp)
   for (let fn in exp) {
     reducers[fn] = exp[fn]
   }
 }
-console.log(reducers)
-
 const rootReducer = combineReducers({
   router: routerReducer,
   ...reducers,

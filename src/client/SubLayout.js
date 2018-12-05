@@ -1,9 +1,8 @@
 import React from 'react'
 import { Route } from 'react-router-dom'
+import { isSet } from 'mytoolkit'
 
 const nodePath = require('path')
-
-const Wrapper = ({ children }) => <React.Fragment>{children}</React.Fragment>
 
 const SubLayout = ({ routes = [], dir = '' }) => {
   return (
@@ -11,23 +10,18 @@ const SubLayout = ({ routes = [], dir = '' }) => {
       {
         routes.map((route, i) => {
           const path = nodePath.join(dir, route.path)
-          const Component = route.component || Wrapper
           const subRoutes = route.routes || []
-          return (
-            <React.Fragment key={i}>
-              {
-                subRoutes.length > 0 ?
-                  <Component>
-                    <SubLayout routes={subRoutes} dir={path} />
-                  </Component>
-                  :
-                  <Route
-                    path={path}
-                    exact={route.exact ? true : false}
-                    component={Component} />
-              }
-            </React.Fragment>
-          )
+          if (subRoutes.length > 0) {
+            return <SubLayout key={i} routes={subRoutes} dir={path} />
+          }
+          if (route.component) {
+            return <Route
+              key={i}
+              path={path}
+              exact={isSet(route.exact) && !route.exact ? false : true}
+              component={route.component} />
+          }
+          return null
         })
       }
     </React.Fragment>
