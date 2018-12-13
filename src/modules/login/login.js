@@ -1,16 +1,17 @@
 import React from 'react'
-import { Button, WingBlank, WhiteSpace } from 'antd-mobile'
+import { Button } from 'antd'
 
 export default class Login extends React.Component {
   render() {
     return (
       <div>
         login page
-        <WingBlank>
+        <p>  
           <Button>default</Button>
-          <WhiteSpace />
+        </p>
+        <p>
           <Button type="primary">primary</Button>
-        </WingBlank>
+        </p>
       </div>
     )
   }
