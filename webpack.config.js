@@ -7,6 +7,9 @@ module.exports = {
   alias: {
     $components: path.join($common, 'components'),
     $config: path.join($common, 'config'),
+    $images: path.join($common, 'images'),
+    $request: path.join($common, 'request'),
+    $utils: path.join($common, 'utils'),
     $home: path.join($modules, 'home'),
   },
   postCssOptions: {
