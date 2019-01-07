@@ -13,3 +13,4 @@ export function pwd() {
 
 export const guardList = guard(value => typeOf(value) !== 'Array', [])
 export const guardObj = guard(value => typeOf(value) !== 'Object', {})
+export const guardNumber = guard(value => /^\d+$/.test(value), 0)
