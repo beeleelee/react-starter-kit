@@ -47,6 +47,10 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 // Process CLI arguments
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
+const projectConfigPath = path.join(paths.appSrc, '/common/config')
+const projectConfigLocal = path.join(projectConfigPath, 'index.js')
+const projectConfigLocalBackup = path.join(projectConfigPath, '_index.js')
+const projectConfigProduct = path.join(projectConfigPath, 'product.js')
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -64,6 +68,10 @@ checkBrowsers(paths.appPath, isInteractive)
     // Merge with the public folder
     copyPublicFolder();
     // Start the webpack build
+    // 备份本地配置文件
+    fs.copySync(projectConfigLocal, projectConfigLocalBackup)
+    // 生产配置文件覆盖本地配置文件
+    fs.copySync(projectConfigProduct, projectConfigLocal)
     return build(previousFileSizes);
   })
   .then(
@@ -73,13 +81,13 @@ checkBrowsers(paths.appPath, isInteractive)
         console.log(warnings.join('\n\n'));
         console.log(
           '\nSearch for the ' +
-            chalk.underline(chalk.yellow('keywords')) +
-            ' to learn more about each warning.'
+          chalk.underline(chalk.yellow('keywords')) +
+          ' to learn more about each warning.'
         );
         console.log(
           'To ignore, add ' +
-            chalk.cyan('// eslint-disable-next-line') +
-            ' to the line before.\n'
+          chalk.cyan('// eslint-disable-next-line') +
+          ' to the line before.\n'
         );
       } else {
         console.log(chalk.green('Compiled successfully.\n'));
@@ -106,6 +114,11 @@ checkBrowsers(paths.appPath, isInteractive)
         buildFolder,
         useYarn
       );
+
+      // 还原本地配置文件
+      fs.copySync(projectConfigLocalBackup, projectConfigLocal)
+      // 删除本地配置备份文件
+      fs.removeSync(projectConfigLocalBackup)
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
@@ -158,7 +171,7 @@ function build(previousFileSizes) {
         console.log(
           chalk.yellow(
             '\nTreating warnings as errors because process.env.CI = true.\n' +
-              'Most CI servers set it automatically.\n'
+            'Most CI servers set it automatically.\n'
           )
         );
         return reject(new Error(messages.warnings.join('\n\n')));
