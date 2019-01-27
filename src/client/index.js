@@ -3,6 +3,14 @@ import ReactDOM from 'react-dom';
 import '@beeleelee/common-css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {
+  rem
+} from 'mytoolkit'
+
+rem({
+  win: window,
+  doc: document
+})
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
